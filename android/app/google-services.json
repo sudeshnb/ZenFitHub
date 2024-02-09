@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "994493490810",
+    "project_id": "zen-fit-hub",
+    "storage_bucket": "zen-fit-hub.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:994493490810:android:e0362b23c41efb3bf9bdc3",
+        "android_client_info": {
+          "package_name": "com.zenfithub.android"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZPwqh1owk8Bt7FU8M4EPJbYQFOxhrvTQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
