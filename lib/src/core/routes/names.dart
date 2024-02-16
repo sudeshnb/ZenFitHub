@@ -15,7 +15,11 @@ class RoutesName {
 
   static const String forgotPasswordScreen = '/forgot_password_screen';
 
-  // static const String checkYourEmailScreen = '/check_your_email_screen';
-
   static const String main = '/home_screen';
+
+  static const String mealPlan = '/meal_plan_screen';
+
+  static const String mealPlanAdd = '/add_meal_plan_screen';
+
+  static const String mealPlanUpdate = '/update_meal_plan_screen';
 }

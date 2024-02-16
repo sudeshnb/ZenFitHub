@@ -202,7 +202,7 @@ class _BuildConnectWithFacebook extends StatelessWidget {
         child: const CustomImageView(imagePath: AppIcons.facebook),
       ),
       decoration: CustomButtonStyles.fillIndigo,
-      onPressed: () => context.read<LoginCubit>().loginWithFacebook(),
+      // onPressed: () => context.read<LoginCubit>().loginWithFacebook(),
     );
   }
 }

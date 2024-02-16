@@ -15,6 +15,9 @@ class AppDecoration {
   static BoxDecoration get fillGray7001 => BoxDecoration(
         color: AppColor.gray700.withOpacity(0.25),
       );
+
+  static BoxDecoration get fillOnPrimaryContainer => BoxDecoration(
+      color: AppColor.white, borderRadius: BorderRadius.circular(25.w));
 }
 
 class BorderRadiusStyle {

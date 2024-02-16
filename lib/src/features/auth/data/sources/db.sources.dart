@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
 import 'package:zen_fit_hub/src/core/config/database.helper.dart';
 import 'package:zen_fit_hub/src/core/constants/database.dart';
@@ -20,7 +18,6 @@ class UserRemoteDataSource {
       }
       return const Right('Please check your internet connection and try.');
     } catch (e) {
-      log(e.toString());
       return const Right('Somethings went wrong.');
     }
   }
@@ -28,11 +25,18 @@ class UserRemoteDataSource {
   EitherString<UserModel> getUser(String id) async {
     try {
       if (await NetworkInfo.isConnected) {
-        final doc = await AppDB.users.doc(id).get();
-        Map<String, dynamic> json = doc.data() as Map<String, dynamic>;
-        return Left(UserModel.fromMap(json));
+        return await AppDB.users.doc(id).get().then((doc) {
+          if (doc.exists) {
+            Map<String, dynamic> json = doc.data() as Map<String, dynamic>;
+
+            return Left(UserModel.fromMap(json));
+          } else {
+            return const Right('User does not exist on the database');
+          }
+        });
+      } else {
+        return const Right('Please check your internet connection and try.');
       }
-      return const Right('Please check your internet connection and try.');
     } catch (e) {
       return const Right('Somethings went wrong.');
     }

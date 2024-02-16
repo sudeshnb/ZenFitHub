@@ -55,6 +55,30 @@ class MealModel {
 
   factory MealModel.fromJson(String source) =>
       MealModel.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  MealModel copyWith({
+    String? image,
+    String? name,
+    String? kcal,
+    String? min,
+    String? fat,
+    String? carbs,
+    String? protein,
+    String? discription,
+    String? id,
+  }) {
+    return MealModel(
+      image: image ?? this.image,
+      name: name ?? this.name,
+      kcal: kcal ?? this.kcal,
+      min: min ?? this.min,
+      fat: fat ?? this.fat,
+      carbs: carbs ?? this.carbs,
+      protein: protein ?? this.protein,
+      discription: discription ?? this.discription,
+      id: id ?? this.id,
+    );
+  }
 }
 
 List<MealModel> cate = [

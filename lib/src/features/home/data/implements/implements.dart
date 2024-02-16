@@ -23,4 +23,24 @@ class HomeRepositoryImp implements HomeRepository {
   EitherString<List<MealModel>> getMeals() {
     return remoteDataSource.getMeals();
   }
+
+  @override
+  EitherString<String> createMeals(MealModel model) {
+    return remoteDataSource.createMeals(model);
+  }
+
+  @override
+  EitherString<String> deleteMeals(String id) {
+    return remoteDataSource.deleteMeals(id);
+  }
+
+  @override
+  EitherString<String> updateMeals(MealModel model) {
+    return remoteDataSource.updateMeals(model);
+  }
+
+  @override
+  EitherString<MealModel> getMeal(String id) {
+    return remoteDataSource.getMeal(id);
+  }
 }

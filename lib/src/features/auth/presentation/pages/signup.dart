@@ -23,7 +23,7 @@ class SignUpScreen extends StatelessWidget {
       child: BlocListener<RegisterCubit, RegisterState>(
         listener: (context, state) {
           if (state.status.isDone) {
-            NavigatorService.pushAndRemove(RoutesName.main);
+            NavigatorService.pushAndRemove(RoutesName.initial);
           }
           if (state.status.error) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -194,7 +194,7 @@ class _BuildConnectWithFacebook extends StatelessWidget {
         child: const CustomImageView(imagePath: AppIcons.facebook),
       ),
       decoration: CustomButtonStyles.fillIndigo,
-      onPressed: () => context.read<RegisterCubit>().loginWithFacebook(),
+      // onPressed: () => context.read<RegisterCubit>().loginWithFacebook(),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:zen_fit_hub/src/core/constants/constants.dart';
 import 'package:zen_fit_hub/src/core/localization/app_localization.dart';
 import 'package:zen_fit_hub/src/core/routes/routes.dart';
@@ -9,6 +10,7 @@ import 'package:zen_fit_hub/src/core/theme/app.decoration.dart';
 import 'package:zen_fit_hub/src/core/theme/custom.button.style.dart';
 import 'package:zen_fit_hub/src/core/theme/custom.text.style.dart';
 import 'package:zen_fit_hub/src/core/widgets/widgets.dart';
+import 'package:zen_fit_hub/src/features/auth/presentation/bloc/auth/app_bloc.dart';
 import 'package:zen_fit_hub/src/features/auth/presentation/cubit/user.cubit.dart';
 import '../cubit/profile.cubit.dart';
 import '../widgets/custom.drop.down.dart';
@@ -18,7 +20,6 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = CustomTextStyles.titleLarge.copyWith(color: AppColor.black);
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
         return BlocProvider(
@@ -41,10 +42,9 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 20.w),
-                      GestureDetector(
-                        onTap: () {
-                          context.read<ProfileCubit>().pickImageCamera();
-                        },
+                      ShrinkButtonWithChild(
+                        onPressed: () =>
+                            context.read<ProfileCubit>().pickImageCamera(),
                         child: ClipRRect(
                           clipBehavior: Clip.hardEdge,
                           borderRadius: BorderRadius.circular(100.h),
@@ -74,34 +74,40 @@ class ProfilePage extends StatelessWidget {
                       ),
                       Align(
                         alignment: Alignment.centerLeft,
-                        child: Text("lbl_full_name".tr, style: style),
+                        child: Text("lbl_full_name".tr,
+                            style: CustomTextStyles.titleLargeB),
                       ),
                       const _BuildNameTextEditor(),
                       SizedBox(height: 10.w),
                       Align(
                         alignment: Alignment.centerLeft,
-                        child: Text("lbl_phone".tr, style: style),
+                        child: Text("lbl_phone".tr,
+                            style: CustomTextStyles.titleLargeB),
                       ),
                       const _BuildPhoneTextEditor(),
                       SizedBox(height: 10.w),
                       Align(
                           alignment: Alignment.centerLeft,
-                          child: Text("lbl_email_address".tr, style: style)),
+                          child: Text("lbl_email_address".tr,
+                              style: CustomTextStyles.titleLargeB)),
                       const _BuildEmailTextEditor(),
                       SizedBox(height: 10.w),
                       Align(
                           alignment: Alignment.centerLeft,
-                          child: Text("lbl_weight".tr, style: style)),
+                          child: Text("lbl_weight".tr,
+                              style: CustomTextStyles.titleLargeB)),
                       const _BuildWeightInput(),
                       SizedBox(height: 10.w),
                       Align(
                           alignment: Alignment.centerLeft,
-                          child: Text("lbl_height".tr, style: style)),
+                          child: Text("lbl_height".tr,
+                              style: CustomTextStyles.titleLargeB)),
                       const _BuildHeightInput(),
                       SizedBox(height: 10.w),
                       Align(
                           alignment: Alignment.centerLeft,
-                          child: Text("lbl_gender".tr, style: style)),
+                          child: Text("lbl_gender".tr,
+                              style: CustomTextStyles.titleLargeB)),
                       SizedBox(height: 10.w),
                       CustomDropDown(
                           hintText: pro.gender,
@@ -116,12 +122,32 @@ class ProfilePage extends StatelessWidget {
                       SizedBox(height: 10.w),
                       Align(
                           alignment: Alignment.centerLeft,
-                          child: Text("lbl_age".tr, style: style)),
+                          child: Text("lbl_age".tr,
+                              style: CustomTextStyles.titleLargeB)),
                       const _BuildAgeTextEditor(),
                       SizedBox(height: 20.w),
                       const _BuildSaveButton(),
                       SizedBox(height: 20.w),
-                      const _BuildDeleteButton(),
+                      // const _BuildDeleteButton(),
+                      CustomElevatedButton(
+                          text: "lbl_logout".tr,
+                          decoration: CustomButtonStyles.fillRed,
+                          onPressed: () async {
+                            await QuickAlert.show(
+                              context: context,
+                              type: QuickAlertType.confirm,
+                              title: 'Are you sure to logout?',
+                              text:
+                                  'Are you sure you want to logout this account?',
+                              onConfirmBtnTap: () async {
+                                context
+                                    .read<AppBloc>()
+                                    .add(const AppLogoutRequested());
+                                NavigatorService.pushAndRemove(
+                                    RoutesName.initial);
+                              },
+                            );
+                          }),
                       SizedBox(height: 120.w),
                     ],
                   ),
@@ -144,35 +170,50 @@ class _BuildSaveButton extends StatelessWidget {
       builder: (context, state) {
         return CustomElevatedButton(
           text: "lbl_save".tr,
-          onPressed: () {
-            context.read<ProfileCubit>().save(context);
-            context.read<UserCubit>().init();
-          },
-        );
-      },
-    );
-  }
-}
-
-class _BuildDeleteButton extends StatelessWidget {
-  const _BuildDeleteButton();
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<ProfileCubit, ProfileState>(
-      builder: (context, state) {
-        return CustomElevatedButton(
-          decoration: CustomButtonStyles.fillRed,
-          text: "lbl_delete".tr,
           onPressed: () async {
-            await context.read<ProfileCubit>().delete(context).then(
-                (value) => NavigatorService.pushAndRemove(RoutesName.initial));
+            await context
+                .read<ProfileCubit>()
+                .save(context)
+                .then((value) => context.read<UserCubit>().init());
           },
         );
       },
     );
   }
 }
+
+// class _BuildDeleteButton extends StatelessWidget {
+//   const _BuildDeleteButton();
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocBuilder<ProfileCubit, ProfileState>(
+//       builder: (context, state) {
+//         return CustomElevatedButton(
+//           decoration: CustomButtonStyles.fillRed,
+//           text: "lbl_delete".tr,
+//           onPressed: () async {
+//             await QuickAlert.show(
+//               context: context,
+//               type: QuickAlertType.confirm,
+//               title: 'Are you sure to delete?',
+//               text: 'Are you sure you want to delete this account?',
+//               onConfirmBtnTap: () async {
+//                 await context
+//                     .read<ProfileCubit>()
+//                     .delete(context)
+//                     .then((value) {
+//                   context.read<AppBloc>().add(const AppLogoutRequested());
+//                   NavigatorService.pushAndRemove(RoutesName.initial);
+//                 });
+//               },
+//             );
+//           },
+//         );
+//       },
+//     );
+//   }
+// }
 
 class _BuildNameTextEditor extends StatelessWidget {
   const _BuildNameTextEditor();
@@ -186,6 +227,7 @@ class _BuildNameTextEditor extends StatelessWidget {
           child: CustomTextFormField(
             controller: state.nameController,
             height: 50.w,
+            maxLines: 1,
             textInputType: TextInputType.name,
           ),
         );

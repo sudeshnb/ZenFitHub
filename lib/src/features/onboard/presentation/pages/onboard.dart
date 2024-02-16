@@ -17,13 +17,7 @@ class OnBoardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // String userId = StorageService.userId;
-
-    // if (userId.isEmpty) {
     return const OnBoardingBody();
-    // } else {
-    //   return const SplashPage();
-    // }
   }
 }
 

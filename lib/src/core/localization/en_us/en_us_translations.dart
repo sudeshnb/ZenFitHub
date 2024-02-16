@@ -56,8 +56,24 @@ final Map<String, String> enUs = {
   "lbl_female": "Female",
   "lbl_male": "Male",
   "lbl_delete": "Delete Account",
+  "lbl_update": "Update",
+//
+  "lbl_fat": "Fat",
+  "lbl_carbs": "Carbs",
+  "lbl_protein": "Protein",
+  "lbl_kcal": "Kcal",
+  "lbl_min": "Minutes",
   //
+  "lbl_add_meal": "Add Meal",
+  "msg_favorite_recipes": "Favorite recipes to add\nthem here!",
+//
+  "lbl_meal_name": "Meal Name",
+  "lbl_meal_description": "Meal Description",
+  "lbl_meal_image": "Meal Image",
+  "lbl_logout": "Logout",
+
 // Network Error String
+
   "msg_network_err": "Network Error",
   "msg_something_went_wrong": "Something Went Wrong!",
 

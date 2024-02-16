@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:zen_fit_hub/src/core/keys/keys.dart';
+import 'package:zen_fit_hub/src/core/services/services.dart';
 import 'package:zen_fit_hub/src/features/auth/domain/usecases/usecases.dart';
 
 class LoginCubit extends Cubit<LoginState> {
@@ -25,9 +27,15 @@ class LoginCubit extends Cubit<LoginState> {
     response.fold(
       (id) async {
         final user = await _authRepo.getUser(id);
+
         user.fold(
-          (l) => emit(state.copyWith(status: LoginStatus.done)),
-          (r) => emit(state.copyWith(err: (r), status: LoginStatus.error)),
+          (l) async {
+            await StorageService.setString(AppKey.userId, l.id!);
+            emit(state.copyWith(status: LoginStatus.done));
+          },
+          (r) {
+            emit(state.copyWith(err: (r), status: LoginStatus.error));
+          },
         );
       },
       (failure) {

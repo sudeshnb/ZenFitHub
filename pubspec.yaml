@@ -48,6 +48,8 @@ dependencies:
   flutter_offline: ^3.0.1
   path_provider: ^2.1.2
   quickalert: ^1.0.2
+  uuid: ^4.3.3
+  cupertino_icons: ^1.0.6
 
 dev_dependencies:
   flutter_test:

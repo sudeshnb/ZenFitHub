@@ -52,8 +52,11 @@ class SplashPage extends StatelessWidget {
                               ),
                             ),
                           ),
-                          CustomImageView(
-                            imagePath: AppImage.imgGirlDoingBice,
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: CustomImageView(
+                              imagePath: AppImage.imgGirlDoingBice,
+                            ),
                           ),
                         ],
                       ),

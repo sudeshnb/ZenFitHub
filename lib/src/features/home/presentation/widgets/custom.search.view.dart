@@ -82,11 +82,17 @@ class CustomSearchView extends StatelessWidget {
         : searchViewWidget(context);
   }
 
-  Widget searchViewWidget(BuildContext context) => SizedBox(
+  Widget searchViewWidget(BuildContext context) => Container(
         width: width ?? double.maxFinite,
+        clipBehavior: Clip.hardEdge,
+        padding: const EdgeInsets.all(2),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.w),
+          border: Border.all(width: 0.2),
+        ),
         child: TextFormField(
-          scrollPadding:
-              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          // scrollPadding:
+          //     EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           controller: controller,
           // focusNode: focusNode ?? FocusNode(),
           // autofocus: autofocus!,
@@ -159,8 +165,6 @@ extension SearchViewStyleHelper on CustomSearchView {
         borderSide: BorderSide.none,
       );
   static UnderlineInputBorder get underLineBlueGray => UnderlineInputBorder(
-        borderSide: BorderSide(
-          color: AppColor.blueGray50,
-        ),
+        borderSide: BorderSide(color: AppColor.blueGray50),
       );
 }

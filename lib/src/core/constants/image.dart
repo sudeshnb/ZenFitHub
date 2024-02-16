@@ -15,4 +15,6 @@ class AppImage {
 
 //img_dumbell.png
   // home
+  // 39_My Favorites Empty images
+  static String imgMeal = '$imagePath/img_meal.png';
 }

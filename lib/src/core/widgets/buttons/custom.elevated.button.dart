@@ -4,6 +4,7 @@ import 'package:zen_fit_hub/src/core/constants/constants.dart';
 import 'package:zen_fit_hub/src/core/theme/custom.text.style.dart';
 
 import 'base.button.dart';
+import 'shrink.button.dart';
 
 class CustomElevatedButton extends BaseButton {
   const CustomElevatedButton({
@@ -48,8 +49,8 @@ class CustomElevatedButton extends BaseButton {
         : buildElevatedButtonWidget;
   }
 
-  Widget get buildElevatedButtonWidget => GestureDetector(
-        onTap: isDisabled ?? false ? null : onPressed ?? () {},
+  Widget get buildElevatedButtonWidget => ShrinkButtonWithChild(
+        onPressed: isDisabled ?? false ? () {} : onPressed ?? () {},
         child: Container(
           height: height ?? 55.w,
           width: width ?? double.maxFinite,

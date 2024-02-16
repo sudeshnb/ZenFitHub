@@ -41,6 +41,9 @@ class CustomTextStyles {
         fontWeight: FontWeight.w500,
       );
 
+  static TextStyle get titleLargeB =>
+      titleLarge.copyWith(color: AppColor.black);
+
   static TextStyle get titleSmallDMSansBluegray => TextStyle(
         color: AppColor.blueGray900,
         fontSize: 15.sp,
@@ -59,12 +62,24 @@ class CustomTextStyles {
         fontFamily: 'Montserrat',
         fontWeight: FontWeight.w500,
       );
-
+  static TextStyle get titleSmallBold => TextStyle(
+        color: AppColor.black.withOpacity(0.6),
+        fontSize: 14.sp,
+        fontFamily: 'Montserrat',
+        fontWeight: FontWeight.bold,
+      );
   static TextStyle get labelLarge => TextStyle(
         color: AppColor.black.withOpacity(0.6),
         fontWeight: FontWeight.w500,
         fontSize: 12.sp,
         fontFamily: 'Montserrat',
+      );
+
+  static TextStyle get titleBold => TextStyle(
+        color: AppColor.black.withOpacity(0.6),
+        fontSize: 18.sp,
+        fontFamily: 'Montserrat',
+        fontWeight: FontWeight.bold,
       );
 
   static TextStyle get titleLargeDMSans => TextStyle(

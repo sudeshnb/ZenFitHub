@@ -94,8 +94,8 @@ class CustomTextFormField extends StatelessWidget {
         width: width ?? double.maxFinite,
         height: height ?? 55.w,
         child: TextFormField(
-          scrollPadding:
-              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          // scrollPadding:
+          //     EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           controller: controller,
           style: textStyle ?? CustomTextStyles.titleSmall,
           obscureText: obscureText!,
@@ -115,8 +115,8 @@ class CustomTextFormField extends StatelessWidget {
         suffixIcon: suffix,
         suffixIconConstraints: suffixConstraints,
         isDense: true,
-        contentPadding: contentPadding ??
-            EdgeInsets.only(left: 18.w, top: 18.w, bottom: 18.w),
+        // contentPadding: contentPadding ??
+        //     EdgeInsets.only(left: 18.w, top: 18.w, bottom: 18.w),
         fillColor: fillColor ?? AppColor.gray100,
         filled: filled,
         border: borderDecoration ??

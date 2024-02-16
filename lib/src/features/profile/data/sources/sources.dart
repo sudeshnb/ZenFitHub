@@ -26,10 +26,21 @@ class ProfileRemoteDataSource {
   EitherString<bool> update(UserModel user) async {
     try {
       if (await NetworkInfo.isConnected) {
-        await AppDB.users.doc(user.id).update(user.toMap());
-        return const Left(true);
+        if (user.id != null && user.id!.isNotEmpty) {
+          return await AppDB.users.doc(user.id).get().then((value) async {
+            if (value.exists) {
+              await AppDB.users.doc(user.id).update(user.toMap());
+              return const Left(true);
+            } else {
+              await AppDB.users.doc(user.id).set(user.toMap());
+              return const Left(true);
+            }
+          });
+        }
+        return const Right('Somethings went wrong.');
+      } else {
+        return const Right('Please check your internet connection and try.');
       }
-      return const Right('Please check your internet connection and try.');
     } catch (e) {
       return const Right('Somethings went wrong.');
     }

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:equatable/equatable.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +9,7 @@ import 'package:zen_fit_hub/src/core/config/database.helper.dart';
 import 'package:zen_fit_hub/src/core/network/network_info.dart';
 import 'package:zen_fit_hub/src/core/services/services.dart';
 import 'package:zen_fit_hub/src/features/auth/data/models/models.dart';
+import 'package:zen_fit_hub/src/features/auth/domain/usecases/usecases.dart';
 import 'package:zen_fit_hub/src/features/profile/domain/usecases/usecases.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
@@ -29,18 +29,27 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   GetProfileUseCase useCase = GetProfileUseCase();
 
-  init(UserModel? userModel) async {
+  final GetAuthUseCase _authRepo = GetAuthUseCase();
+
+  Future<void> init(UserModel? userModel) async {
+    final userID = StorageService.userID;
+
     if (!await NetworkInfo.isConnected) {
       userModel = await DatabaseHelper.instance.getUser();
+    } else {
+      if (userID.isNotEmpty) {
+        final response = await _authRepo.getUser(userID);
+        response.fold((user) => userModel = user, (r) => null);
+      }
     }
-
     if (userModel == null) return;
-    nameController.text = userModel.name ?? '';
-    phoneController.text = userModel.phone ?? '';
-    emailController.text = userModel.email ?? '';
-    ageController.text = (userModel.age ?? '').toString();
-    weightController.text = userModel.weight ?? '';
-    heightController.text = userModel.height ?? '';
+
+    nameController.text = userModel!.name ?? '';
+    phoneController.text = userModel!.phone ?? '';
+    emailController.text = userModel!.email ?? '';
+    ageController.text = (userModel!.age ?? '').toString();
+    weightController.text = userModel!.weight ?? '';
+    heightController.text = userModel!.height ?? '';
 
     emit(
       state.copyWith(
@@ -48,10 +57,10 @@ class ProfileCubit extends Cubit<ProfileState> {
         phoneController: phoneController,
         emailController: emailController,
         ageController: ageController,
-        gender: userModel.gender ?? '',
+        gender: userModel!.gender ?? '',
         weight: weightController,
         height: heightController,
-        image: userModel.image,
+        image: userModel!.image,
       ),
     );
   }
@@ -86,15 +95,21 @@ class ProfileCubit extends Cubit<ProfileState> {
                 context: context,
                 type: QuickAlertType.success,
                 title: 'Successfully...',
+                autoCloseDuration: const Duration(seconds: 3),
+                showConfirmBtn: false,
               ),
             );
       },
-      (r) => QuickAlert.show(
-        context: context,
-        type: QuickAlertType.error,
-        title: 'Oops...',
-        text: 'Sorry, something went wrong',
-      ),
+      (r) {
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.error,
+          title: 'Oops...',
+          text: 'Sorry, something went wrong',
+          autoCloseDuration: const Duration(seconds: 3),
+          showConfirmBtn: false,
+        );
+      },
     );
   }
 

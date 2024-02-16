@@ -32,7 +32,6 @@ class RootApp extends StatelessWidget {
               supportedLocales: AppLocalization.supportedLocales,
               initialRoute: RoutesName.initial,
               onGenerateRoute: AppRoute.generate,
-              // home: const MainScreen(),
             ),
           ),
         ),

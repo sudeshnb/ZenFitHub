@@ -7,4 +7,12 @@ abstract class HomeRepository {
   EitherString<List<ExerciseModel>> getExercises();
 
   EitherString<List<MealModel>> getMeals();
+
+  EitherString<String> createMeals(MealModel model);
+
+  EitherString<String> updateMeals(MealModel model);
+
+  EitherString<MealModel> getMeal(String id);
+
+  EitherString<String> deleteMeals(String id);
 }

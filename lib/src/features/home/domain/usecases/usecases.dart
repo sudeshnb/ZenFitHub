@@ -18,4 +18,20 @@ class HomeUseCase {
   EitherString<List<MealModel>> getMeals() {
     return repository.getMeals();
   }
+
+  EitherString<String> createMeals(MealModel model) {
+    return repository.createMeals(model);
+  }
+
+  EitherString<String> deleteMeals(String id) {
+    return repository.deleteMeals(id);
+  }
+
+  EitherString<String> updateMeals(MealModel model) {
+    return repository.updateMeals(model);
+  }
+
+  EitherString<MealModel> getMeal(String id) {
+    return repository.getMeal(id);
+  }
 }

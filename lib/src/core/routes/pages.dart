@@ -5,6 +5,10 @@ import 'package:zen_fit_hub/src/features/auth/presentation/bloc/auth/app_bloc.da
 import 'package:zen_fit_hub/src/features/auth/presentation/pages/forgot.pass.dart';
 import 'package:zen_fit_hub/src/features/auth/presentation/pages/login.dart';
 import 'package:zen_fit_hub/src/features/auth/presentation/pages/signup.dart';
+import 'package:zen_fit_hub/src/features/home/data/models/meal.dart';
+import 'package:zen_fit_hub/src/features/home/presentation/pages/add.meals.dart';
+import 'package:zen_fit_hub/src/features/home/presentation/pages/meal.details.dart';
+import 'package:zen_fit_hub/src/features/home/presentation/pages/update.meal.dart';
 import 'package:zen_fit_hub/src/features/main/main.screen.dart';
 import 'package:zen_fit_hub/src/features/onboard/presentation/pages/onboard.dart';
 import 'package:zen_fit_hub/src/features/onboard/presentation/pages/onboard.end.dart';
@@ -44,6 +48,18 @@ class AppRoute {
 
       case RoutesName.main:
         return _fadeTransition(const MainScreen());
+
+      case RoutesName.mealPlan:
+        // MealModel model = settings!.arguments as MealModel;
+        String id = settings!.arguments as String;
+        return _fadeTransition(FetchingMeal(id: id));
+
+      case RoutesName.mealPlanUpdate:
+        MealModel model = settings!.arguments as MealModel;
+        return _fadeTransition(UpdateMealplanPage(model: model));
+
+      case RoutesName.mealPlanAdd:
+        return _fadeTransition(const AddMealplanPage());
 
       default:
         // If there is no such named route in the switch statement

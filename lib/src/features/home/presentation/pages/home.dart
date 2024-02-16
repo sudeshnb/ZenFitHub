@@ -25,12 +25,12 @@ class HomePage extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: Row(
+                  // mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomImageView(
-                      imagePath: AppIcons.menu,
-                      color: AppColor.black,
-                    ),
-                    SizedBox(width: 20.w),
+                    // CustomImageView(
+                    //     imagePath: AppIcons.menu, color: AppColor.black),
+                    // SizedBox(width: 20.w),
                     CustomImageView(
                       imagePath:
                           (state.user != null && state.user!.image != null)
@@ -41,7 +41,9 @@ class HomePage extends StatelessWidget {
                       fit: BoxFit.cover,
                       radius: BorderRadius.all(Radius.circular(50.w)),
                     ),
-                    const Spacer(),
+                    // const _BuildHeader(),
+                    const Expanded(child: _BuildHeaderComponents()),
+                    // const Spacer(),
                     CustomImageView(
                       imagePath: AppIcons.notification,
                       color: AppColor.black,
@@ -56,7 +58,10 @@ class HomePage extends StatelessWidget {
                 child: Column(
                   children: [
                     SizedBox(height: 10.w),
-                    const _BuildHeader(),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.w),
+                      child: CustomSearchView(hintText: "lbl_search".tr),
+                    ),
                     SizedBox(height: 20.w),
                     const _BuildStartExercise(),
                     SizedBox(height: 20.w),
@@ -96,36 +101,6 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class _BuildHeader extends StatelessWidget {
-  const _BuildHeader();
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.topLeft,
-      children: [
-        Positioned(
-          top: -100,
-          left: -80,
-          child: CircleAvatar(
-            radius: 140,
-            backgroundColor: AppColor.white.withOpacity(0.1),
-          ),
-        ),
-        Positioned(
-          top: -20,
-          left: -10,
-          child: CircleAvatar(
-            radius: 90,
-            backgroundColor: AppColor.white.withOpacity(0.1),
-          ),
-        ),
-        const _BuildHeaderComponents(),
-      ],
-    );
-  }
-}
-
 class _BuildHeaderComponents extends StatelessWidget {
   const _BuildHeaderComponents();
 
@@ -145,7 +120,7 @@ class _BuildHeaderComponents extends StatelessWidget {
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
         return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w).copyWith(top: 20.w),
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -154,17 +129,20 @@ class _BuildHeaderComponents extends StatelessWidget {
                   style: CustomTextStyles.labelMedium.copyWith(
                     fontSize: 14.sp,
                     color: AppColor.black,
+                    fontWeight: Font.l,
                   ),
                 ),
                 if (state.user != null && state.user!.name != null)
                   Text(
                     state.user!.name!,
+                    maxLines: 1,
                     style: CustomTextStyles.titleLargeDMSans.copyWith(
                       color: AppColor.black,
+                      fontSize: 16.sp,
                     ),
                   ),
                 SizedBox(height: 20.w),
-                CustomSearchView(hintText: "lbl_search".tr)
+                // CustomSearchView(hintText: "lbl_search".tr)
               ],
             ));
       },
