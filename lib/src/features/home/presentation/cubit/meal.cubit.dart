@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,163 +12,150 @@ import 'package:zen_fit_hub/src/features/home/domain/usecases/usecases.dart';
 class MealCubit extends Cubit<MealState> {
   MealCubit() : super(const MealState());
 
-  static TextEditingController title = TextEditingController();
-
-  static TextEditingController description = TextEditingController();
-
-  static TextEditingController fat = TextEditingController();
-
-  static TextEditingController carbs = TextEditingController();
-
-  static TextEditingController min = TextEditingController();
-
-  static TextEditingController kcal = TextEditingController();
-
-  static TextEditingController protein = TextEditingController();
-
   HomeUseCase useCase = HomeUseCase();
 
-  Future<void> init() async {
-    emit(
-      state.copyWith(
-          title: title,
-          description: description,
-          fat: fat,
-          carbs: carbs,
-          min: min,
-          kcal: kcal,
-          protein: protein),
-    );
+  getTitle(String? value) {
+    emit(state.copyWith(title: value));
+  }
+
+  getdescription(String? value) {
+    emit(state.copyWith(description: value));
+  }
+
+  getfat(String? value) {
+    emit(state.copyWith(fat: value));
+  }
+
+  getcarbs(String? value) {
+    emit(state.copyWith(carbs: value));
+  }
+
+  getkcal(String? value) {
+    emit(state.copyWith(kcal: value));
+  }
+
+  getmin(String? value) {
+    emit(state.copyWith(min: value));
+  }
+
+  getprotein(String? value) {
+    emit(state.copyWith(protein: value));
   }
 
   Future<void> pickImage() async {
     var image = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (image == null) return;
-    await uploadImage(File(image.path));
-  }
 
-  Future<void> uploadImage(File file) async {
-    Reference reference =
-        FirebaseStorage.instance.ref().child('meals/${file.path}');
-    UploadTask uploadTask = reference.putFile(file);
-    TaskSnapshot snapshot = await uploadTask;
-    await snapshot.ref
-        .getDownloadURL()
-        .then((imageUrl) => emit(state.copyWith(image: imageUrl)));
+    emit(state.copyWith(image: image.path, file: File(image.path)));
   }
 
   Future<void> create(BuildContext context) async {
-    final response = await useCase.createMeals(mealModel);
+    final id = const Uuid().v1();
 
-    response.fold(
-      (l) {
-        QuickAlert.show(
+    final mealModel = MealModel(
+      image: state.image,
+      name: state.title,
+      kcal: state.kcal,
+      min: state.min,
+      fat: state.fat,
+      carbs: state.carbs,
+      protein: state.protein,
+      discription: state.description,
+      id: id,
+    );
+
+    await useCase.createMeals(mealModel).then((response) {
+      response.fold(
+        (l) {
+          QuickAlert.show(
+            context: context,
+            type: QuickAlertType.success,
+            title: 'Added successfully...!',
+            autoCloseDuration: const Duration(seconds: 3),
+            showConfirmBtn: false,
+          ).then((value) {
+            // clear();
+            NavigatorService.goBack();
+          });
+        },
+        (r) => QuickAlert.show(
           context: context,
-          type: QuickAlertType.success,
-          title: 'Added successfully...!',
+          type: QuickAlertType.error,
+          title: 'Oops...',
+          text: 'Sorry, something went wrong',
           autoCloseDuration: const Duration(seconds: 3),
           showConfirmBtn: false,
-        ).then((value) {
-          clear();
-          NavigatorService.goBack();
-        });
-      },
-      (r) => QuickAlert.show(
-        context: context,
-        type: QuickAlertType.error,
-        title: 'Oops...',
-        text: 'Sorry, something went wrong',
-        autoCloseDuration: const Duration(seconds: 3),
-        showConfirmBtn: false,
-      ),
-    );
-  }
-
-  void clear() {
-    title.clear();
-    description.clear();
-    fat.clear();
-    min.clear();
-    carbs.clear();
-    kcal.clear();
-    protein.clear();
-    emit(
-      state.copyWith(
-          title: title,
-          description: description,
-          fat: fat,
-          carbs: carbs,
-          min: min,
-          kcal: kcal,
-          protein: protein,
-          image: ''),
-    );
-  }
-
-  MealModel get mealModel => MealModel(
-        image: state.image ?? '',
-        name: title.text,
-        kcal: kcal.text,
-        min: min.text,
-        fat: fat.text,
-        carbs: carbs.text,
-        protein: protein.text,
-        discription: description.text,
-        id: const Uuid().v1(),
+        ),
       );
+    });
+  }
 }
 
 class MealState extends Equatable {
-  final TextEditingController? title;
+  final String title;
 
-  final TextEditingController? description;
+  final String description;
 
-  final TextEditingController? fat;
+  final String fat;
 
-  final TextEditingController? carbs;
+  final String carbs;
 
-  final TextEditingController? min;
+  final String min;
 
-  final TextEditingController? kcal;
+  final String kcal;
 
-  final TextEditingController? protein;
+  final String protein;
 
-  final String? image;
+  final String image;
+
+  final File? file;
 
   const MealState({
-    this.title,
-    this.description,
-    this.fat,
-    this.carbs,
-    this.min,
-    this.kcal,
-    this.protein,
-    this.image,
+    this.title = '',
+    this.description = '',
+    this.fat = '',
+    this.carbs = '',
+    this.min = '',
+    this.kcal = '',
+    this.protein = '',
+    this.file,
+    this.image = '',
   });
 
   @override
-  List<Object?> get props =>
-      [title, description, fat, carbs, protein, kcal, image, min];
+  List<Object?> get props => [
+        title,
+        description,
+        fat,
+        carbs,
+        protein,
+        kcal,
+        image,
+        min,
+        file,
+      ];
 
   MealState copyWith({
-    TextEditingController? title,
-    TextEditingController? description,
-    TextEditingController? fat,
-    TextEditingController? carbs,
-    TextEditingController? protein,
-    TextEditingController? min,
-    TextEditingController? kcal,
+    String? title,
+    String? description,
+    String? fat,
+    String? carbs,
+    String? protein,
+    String? min,
+    String? kcal,
     String? image,
+    File? file,
   }) {
     return MealState(
-      title: title ?? title,
-      description: description ?? description,
-      fat: fat ?? fat,
-      carbs: carbs ?? carbs,
-      min: min ?? min,
-      kcal: kcal ?? kcal,
-      protein: protein ?? protein,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      fat: fat ?? this.fat,
+      carbs: carbs ?? this.carbs,
+      min: min ?? this.min,
+      kcal: kcal ?? this.kcal,
+      protein: protein ?? this.protein,
       image: image ?? this.image,
+      file: file ?? this.file,
     );
   }
 }

@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:zen_fit_hub/src/core/constants/database.dart';
 import 'package:zen_fit_hub/src/core/error/functions.dart';
 import 'package:zen_fit_hub/src/core/network/network_info.dart';
@@ -66,7 +69,10 @@ class HomeRemoteDataSource {
   EitherString<String> createMeals(MealModel model) async {
     try {
       if (await NetworkInfo.isConnected) {
-        await AppDB.meals.doc(model.id).set(model.toMap());
+        final image = await uploadImage(model.image);
+        await AppDB.meals
+            .doc(model.id)
+            .set(model.copyWith(image: image).toMap());
         return const Left('Done');
       }
       return const Right('Please check your internet connection and try.');
@@ -115,5 +121,13 @@ class HomeRemoteDataSource {
     } catch (e) {
       return const Right('Somethings went wrong.');
     }
+  }
+
+  Future<String> uploadImage(String path) async {
+    if (path.isEmpty) return path;
+    Reference reference = FirebaseStorage.instance.ref().child('meals/$path');
+    UploadTask uploadTask = reference.putFile(File(path));
+    TaskSnapshot snapshot = await uploadTask;
+    return await snapshot.ref.getDownloadURL();
   }
 }

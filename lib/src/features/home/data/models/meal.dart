@@ -81,53 +81,53 @@ class MealModel {
   }
 }
 
-List<MealModel> cate = [
-  MealModel(
-    image: 'image',
-    name: 'Healthy balanced vegetarian food',
-    kcal: '110',
-    min: '10',
-    fat: '1.5 g',
-    protein: '10.9 g',
-    carbs: '13.5 g',
-    discription:
-        'There are many variations of passages of Lorem Im available, but the majority have suffered alteration in some form, by injected humour,',
-    id: 'DGdU3HPlrfJrXyorIwBG',
-  ),
-  MealModel(
-    image: 'image',
-    name: 'Healthy balanced vegetarian food',
-    kcal: '135',
-    min: '8',
-    fat: '1.5 g',
-    protein: '10.9 g',
-    carbs: '13.5 g',
-    discription:
-        'There are many variations of passages of Lorem Im available, but the majority have suffered alteration in some form, by injected humour,',
-    id: 'DGdU3HPlrfJrXyorIwBW',
-  ),
-  MealModel(
-    image: 'image',
-    name: 'Healthy balanced vegetarian food',
-    kcal: '135',
-    min: '5',
-    fat: '1.5 g',
-    protein: '10.9 g',
-    carbs: '13.5 g',
-    discription:
-        'There are many variations of passages of Lorem Im available, but the majority have suffered alteration in some form, by injected humour,',
-    id: 'DGdU3HPlrfJrXyorIwBA',
-  ),
-  MealModel(
-    image: 'image',
-    name: 'Healthy balanced vegetarian food',
-    kcal: '185',
-    min: '8',
-    fat: '1.5 g',
-    protein: '10.9 g',
-    carbs: '13.5 g',
-    discription:
-        'There are many variations of passages of Lorem Im available, but the majority have suffered alteration in some form, by injected humour,',
-    id: 'DGdU3HPlrfJrXyorIwBR',
-  ),
-];
+// List<MealModel> cate = [
+//   MealModel(
+//     image: 'image',
+//     name: 'Healthy balanced vegetarian food',
+//     kcal: '110',
+//     min: '10',
+//     fat: '1.5 g',
+//     protein: '10.9 g',
+//     carbs: '13.5 g',
+//     discription:
+//         'There are many variations of passages of Lorem Im available, but the majority have suffered alteration in some form, by injected humour,',
+//     id: 'DGdU3HPlrfJrXyorIwBG',
+//   ),
+//   MealModel(
+//     image: 'image',
+//     name: 'Healthy balanced vegetarian food',
+//     kcal: '135',
+//     min: '8',
+//     fat: '1.5 g',
+//     protein: '10.9 g',
+//     carbs: '13.5 g',
+//     discription:
+//         'There are many variations of passages of Lorem Im available, but the majority have suffered alteration in some form, by injected humour,',
+//     id: 'DGdU3HPlrfJrXyorIwBW',
+//   ),
+//   MealModel(
+//     image: 'image',
+//     name: 'Healthy balanced vegetarian food',
+//     kcal: '135',
+//     min: '5',
+//     fat: '1.5 g',
+//     protein: '10.9 g',
+//     carbs: '13.5 g',
+//     discription:
+//         'There are many variations of passages of Lorem Im available, but the majority have suffered alteration in some form, by injected humour,',
+//     id: 'DGdU3HPlrfJrXyorIwBA',
+//   ),
+//   MealModel(
+//     image: 'image',
+//     name: 'Healthy balanced vegetarian food',
+//     kcal: '185',
+//     min: '8',
+//     fat: '1.5 g',
+//     protein: '10.9 g',
+//     carbs: '13.5 g',
+//     discription:
+//         'There are many variations of passages of Lorem Im available, but the majority have suffered alteration in some form, by injected humour,',
+//     id: 'DGdU3HPlrfJrXyorIwBR',
+//   ),
+// ];

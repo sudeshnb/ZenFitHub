@@ -14,7 +14,7 @@ class AddMealplanPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => MealCubit()..init(),
+      create: (context) => MealCubit(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Create a new meal plan"),
@@ -32,18 +32,21 @@ class AddMealplanPage extends StatelessWidget {
                       child: ClipRRect(
                         clipBehavior: Clip.hardEdge,
                         borderRadius: BorderRadius.circular(100.h),
-                        child: CustomImageView(
-                          imagePath: state.image != null
-                              ? state.image!.isNotEmpty
-                                  ? state.image!
-                                  : AppImage.imgMeal
-                              : AppImage.imgMeal,
-                          height: 120.w,
-                          width: 120.w,
-                          bgColor: AppColor.deepYellow,
-                          fit: BoxFit.cover,
-                          radius: BorderRadius.circular(100.h),
-                        ),
+                        child: state.file != null
+                            ? Image.file(
+                                state.file!,
+                                height: 120.w,
+                                width: 120.w,
+                                fit: BoxFit.cover,
+                              )
+                            : CustomImageView(
+                                imagePath: AppImage.imgMeal,
+                                height: 120.w,
+                                width: 120.w,
+                                bgColor: AppColor.deepYellow,
+                                fit: BoxFit.cover,
+                                radius: BorderRadius.circular(100.h),
+                              ),
                       ),
                     ),
                     const _BuildTitleTextEditor(),
@@ -77,26 +80,23 @@ class _BuildTitleTextEditor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MealCubit, MealState>(
-      builder: (context, state) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "lbl_meal_name".tr,
-              style: CustomTextStyles.titleLargeB,
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 10.w, bottom: 20.w),
-              child: CustomTextFormField(
-                controller: state.title,
-                height: 50.w,
-                textInputType: TextInputType.name,
-              ),
-            ),
-          ],
-        );
-      },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "lbl_meal_name".tr,
+          style: CustomTextStyles.titleLargeB,
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: 10.w, bottom: 20.w),
+          child: CustomTextFormField(
+            // controller: state.title,
+            onChanged: (value) => context.read<MealCubit>().getTitle(value),
+            height: 50.w,
+            textInputType: TextInputType.name,
+          ),
+        ),
+      ],
     );
   }
 }
@@ -106,27 +106,24 @@ class _BuildDescriptionTextEditor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MealCubit, MealState>(
-      builder: (context, state) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "lbl_meal_description".tr,
-              style: CustomTextStyles.titleLargeB,
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 10.w, bottom: 20.w),
-              child: CustomTextFormField(
-                controller: state.description,
-                maxLines: 5,
-                height: 150.w,
-                textInputType: TextInputType.multiline,
-              ),
-            ),
-          ],
-        );
-      },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "lbl_meal_description".tr,
+          style: CustomTextStyles.titleLargeB,
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: 10.w, bottom: 20.w),
+          child: CustomTextFormField(
+            // controller: state.description,
+            onChanged: context.read<MealCubit>().getdescription,
+            maxLines: 5,
+            height: 150.w,
+            textInputType: TextInputType.multiline,
+          ),
+        ),
+      ],
     );
   }
 }
@@ -136,26 +133,23 @@ class _BuildKaclTextEditor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MealCubit, MealState>(
-      builder: (context, state) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "lbl_kcal".tr,
-              style: CustomTextStyles.titleLargeB,
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 10.w, bottom: 20.w),
-              child: CustomTextFormField(
-                controller: state.kcal,
-                height: 50.w,
-                textInputType: TextInputType.number,
-              ),
-            ),
-          ],
-        );
-      },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "lbl_kcal".tr,
+          style: CustomTextStyles.titleLargeB,
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: 10.w, bottom: 20.w),
+          child: CustomTextFormField(
+            // controller: state.kcal,
+            onChanged: context.read<MealCubit>().getkcal,
+            height: 50.w,
+            textInputType: TextInputType.number,
+          ),
+        ),
+      ],
     );
   }
 }
@@ -165,26 +159,23 @@ class _BuildMinTextEditor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MealCubit, MealState>(
-      builder: (context, state) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "lbl_min".tr,
-              style: CustomTextStyles.titleLargeB,
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 10.w, bottom: 20.w),
-              child: CustomTextFormField(
-                controller: state.min,
-                height: 50.w,
-                textInputType: TextInputType.number,
-              ),
-            ),
-          ],
-        );
-      },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "lbl_min".tr,
+          style: CustomTextStyles.titleLargeB,
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: 10.w, bottom: 20.w),
+          child: CustomTextFormField(
+            // controller: state.min,
+            onChanged: context.read<MealCubit>().getmin,
+            height: 50.w,
+            textInputType: TextInputType.number,
+          ),
+        ),
+      ],
     );
   }
 }
@@ -194,26 +185,23 @@ class _BuildProteinTextEditor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MealCubit, MealState>(
-      builder: (context, state) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "lbl_protein".tr,
-              style: CustomTextStyles.titleLargeB,
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 10.w, bottom: 20.w),
-              child: CustomTextFormField(
-                controller: state.protein,
-                height: 50.w,
-                textInputType: TextInputType.text,
-              ),
-            ),
-          ],
-        );
-      },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "lbl_protein".tr,
+          style: CustomTextStyles.titleLargeB,
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: 10.w, bottom: 20.w),
+          child: CustomTextFormField(
+            // controller: state.protein,
+            onChanged: context.read<MealCubit>().getprotein,
+            height: 50.w,
+            textInputType: TextInputType.text,
+          ),
+        ),
+      ],
     );
   }
 }
@@ -223,26 +211,23 @@ class _BuildCarbsTextEditor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MealCubit, MealState>(
-      builder: (context, state) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "lbl_carbs".tr,
-              style: CustomTextStyles.titleLargeB,
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 10.w, bottom: 20.w),
-              child: CustomTextFormField(
-                controller: state.carbs,
-                height: 50.w,
-                textInputType: TextInputType.text,
-              ),
-            ),
-          ],
-        );
-      },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "lbl_carbs".tr,
+          style: CustomTextStyles.titleLargeB,
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: 10.w, bottom: 20.w),
+          child: CustomTextFormField(
+            // controller: state.carbs,
+            onChanged: context.read<MealCubit>().getcarbs,
+            height: 50.w,
+            textInputType: TextInputType.text,
+          ),
+        ),
+      ],
     );
   }
 }
@@ -252,26 +237,23 @@ class _BuildFatTextEditor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MealCubit, MealState>(
-      builder: (context, state) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "lbl_fat".tr,
-              style: CustomTextStyles.titleLargeB,
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 10.w, bottom: 20.w),
-              child: CustomTextFormField(
-                controller: state.fat,
-                height: 50.w,
-                textInputType: TextInputType.text,
-              ),
-            ),
-          ],
-        );
-      },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "lbl_fat".tr,
+          style: CustomTextStyles.titleLargeB,
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: 10.w, bottom: 20.w),
+          child: CustomTextFormField(
+            // controller: state.fat,
+            onChanged: context.read<MealCubit>().getfat,
+            height: 50.w,
+            textInputType: TextInputType.text,
+          ),
+        ),
+      ],
     );
   }
 }
