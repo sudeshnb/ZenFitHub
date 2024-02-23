@@ -96,6 +96,7 @@ class HomeRemoteDataSource {
     try {
       if (await NetworkInfo.isConnected) {
         await AppDB.meals.doc(model.id).update(model.toMap());
+
         return const Left('Done');
       }
       return const Right('Please check your internet connection and try.');

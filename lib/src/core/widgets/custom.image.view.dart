@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:zen_fit_hub/src/core/constants/colors.dart';
 
@@ -127,7 +128,7 @@ class CustomImageView extends StatelessWidget {
             imageUrl: imagePath!,
             color: color,
             placeholder: (context, url) => SizedBox(
-              height: 30,
+              height: 30.h,
               width: width,
               child: LinearProgressIndicator(
                 color: Colors.grey.shade200,

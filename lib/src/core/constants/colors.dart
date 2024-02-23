@@ -21,13 +21,9 @@ class AppColor {
 
   // BlueGray
   static Color blueGray50 = const Color(0XFFE9ECEF);
-  Color get blueGray500 => const Color(0XFF707A89);
-  Color get blueGray800 => const Color(0XFF234F68);
   static Color blueGray900 = const Color(0XFF3A4750);
 
   // Gray
-
-  Color get gray50 => const Color(0XFFFCFCFC);
   static Color gray600 = const Color(0XFF707070);
   static Color gray100 = const Color(0XFFF5F5F5);
   static Color gray400 = const Color(0XFFBCBCBC);

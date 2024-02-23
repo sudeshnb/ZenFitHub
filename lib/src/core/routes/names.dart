@@ -3,7 +3,7 @@ library route_names;
 class RoutesName {
   static const String initial = '/';
 
-  static const String splashScreen = '/splash_screen';
+  // static const String splashScreen = '/splash_screen';
 
   static const String onboard = '/onboard_screen';
 

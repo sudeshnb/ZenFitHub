@@ -64,10 +64,8 @@ class AuthRemoteDataSource {
         return Right(FailuresToString.message(ServerFailure()));
       }
     } on auth.FirebaseAuthException catch (e) {
-      log(e.code);
       return Right(SignUpWithEmailAndPasswordFailure.fromCode(e.code).message);
     } catch (x) {
-      log(x.toString());
       return Right(FailuresToString.message(UnexpectedFailure()));
     }
   }
@@ -152,36 +150,6 @@ class AuthRemoteDataSource {
       return Right(FailuresToString.message(UnexpectedFailure()));
     }
   }
-
-  // EitherString<bool> updateName(String name) async {
-  //   try {
-  //     if (await NetworkInfo.isConnected) {
-  //       await _firebaseAuth.currentUser!.updateDisplayName(name);
-  //       return const Left(true);
-  //     } else {
-  //       return Right(FailuresToString.message(ServerFailure()));
-  //     }
-  //   } on auth.FirebaseAuthException catch (e) {
-  //     return Right(LogInWithEmailAndPasswordFailure.fromCode(e.code).message);
-  //   } catch (_) {
-  //     return Right(FailuresToString.message(UnexpectedFailure()));
-  //   }
-  // }
-
-  // EitherString<bool> updateImage(String image) async {
-  //   try {
-  //     if (await NetworkInfo.isConnected) {
-  //       await _firebaseAuth.currentUser!.updatePhotoURL(image);
-  //       return const Left(true);
-  //     } else {
-  //       return Right(FailuresToString.message(ServerFailure()));
-  //     }
-  //   } on auth.FirebaseAuthException catch (e) {
-  //     return Right(LogInWithEmailAndPasswordFailure.fromCode(e.code).message);
-  //   } catch (_) {
-  //     return Right(FailuresToString.message(UnexpectedFailure()));
-  //   }
-  // }
 
   EitherString<bool> forgotPassword(String email) async {
     try {

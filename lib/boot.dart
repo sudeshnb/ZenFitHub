@@ -12,6 +12,7 @@ class AppRun {
     await runZonedGuarded<Future<void>>(
       () async {
         WidgetsFlutterBinding.ensureInitialized();
+
         await DependencyInjection.init();
         flutterLogError();
         runApp(const RootApp());
